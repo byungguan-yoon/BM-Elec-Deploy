@@ -1,11 +1,23 @@
 
-visualize/static/
 visualize/__pycache__/
 visualize/.DS_Store/
-.DS_Store
-inference/inference.py
-image
+visualize/static/logo
+visualize/static/result
+visualize/static/templates/css
+visualize/static/templates/js
+visualize/static/templates/img
+visualize/static/templates/scss
+visualize/static/templates/vendor
+visualize/static/templates/LICENSE
+visualize/static/templates/.browserslistrc
 
+*json
+*js
+*yml
+*txt
+
+.DS_Store
+image
 __pycache__
 log
 *zip
