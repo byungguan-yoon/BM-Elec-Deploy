@@ -15,6 +15,7 @@ visualize/static/templates/.browserslistrc
 *js
 *yml
 *txt
+*.sh
 
 .DS_Store
 image

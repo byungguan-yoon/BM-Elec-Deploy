@@ -241,7 +241,7 @@ def mask2rle(img):
 # def read_inference(img_path, target, output_save=False):
 def read_inference(img_path, target, id, pre_h_line=None, path=None, output_save=False):
 
-    model_path = 'epoch=28-val_dice_score=0.7206_.ckpt' # epoch=28-val_dice_score=0.7206_.ckpt
+    model_path = '/home/ishango/Documents/BM-Elec-Deploy/inference/epoch=28-val_dice_score=0.7206_.ckpt' # epoch=28-val_dice_score=0.7206_.ckpt
     model = load_model_pl(model_path)
     model = model.eval().cuda()
 
@@ -322,7 +322,7 @@ def read_inference(img_path, target, id, pre_h_line=None, path=None, output_save
     
     # return info, section_flag
 def load_model():
-    model_path = 'epoch=28-val_dice_score=0.7206_.ckpt' # epoch=28-val_dice_score=0.7206_.ckpt
+    model_path = '/home/ishango/Documents/BM-Elec-Deploy/inference/epoch=28-val_dice_score=0.7206_.ckpt' # epoch=28-val_dice_score=0.7206_.ckpt
     model = LitClassifier()
     model = model.load_from_checkpoint(model_path)
     model = model.eval().cuda()
@@ -344,7 +344,7 @@ def inference(model, image, path, id, pre_h_line=None):
     with torch.no_grad():
         output = model(patches.cuda())
     
-    th = 0.15
+    th = 0.3
     th_output = output > th 
     th_output = th_output.cpu().detach().numpy()[:, 0] # (P, H=1024, W=1024)
     rle_list = get_rle_masks(th_output)
