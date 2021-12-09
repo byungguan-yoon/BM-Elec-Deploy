@@ -82,14 +82,14 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8000/">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://192.168.0.42:8000/">
                 <div class="sidebar-brand-text mx-3">BM ELECTRONICS</div>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="http://localhost:8000/">
+                <a class="nav-link" href="http://192.168.0.42:8000/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -101,14 +101,14 @@
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://localhost:8000/visualization">
+                <a class="nav-link collapsed" href="http://192.168.0.42:8000/visualization">
                     <i class="fas fa-fw fa-camera-retro"></i>
                     <span>검사 (Inspection)</span>
                 </a>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://localhost:8000/visualization">
+                <a class="nav-link collapsed" href="http://192.168.0.42:8000/visualization">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>이미지 저장 (Save Image)</span>
                 </a>
@@ -124,7 +124,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://localhost:8000/tables">
+                <a class="nav-link collapsed" href="http://192.168.0.42:8000/tables">
                     <i class="fas fa-fw fa-desktop"></i>
                     <span>결과 확인 (Display Result)</span>
                 </a>
@@ -278,7 +278,7 @@
     function getStats(){
         $.ajax({
         type: "GET",
-        url: "http://localhost:8000/stats",
+        url: "http://192.168.0.42:8000/stats",
         data: {},
         success:function(data){
             $("#dataTable").DataTable({
