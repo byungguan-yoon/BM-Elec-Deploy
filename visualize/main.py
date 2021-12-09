@@ -55,10 +55,6 @@ async def monitoring():
     response = await fetch_last_one_result()
     return response
 
-@app.get("/pastData") 
-async def pastData():
-    response = await fetch_last_one_result()
-    return response
 
 @app.get("/sections/{section_id}/{timestamp}")
 async def patch(request: Request):
