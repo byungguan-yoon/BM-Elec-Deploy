@@ -3,17 +3,23 @@ import numpy as np
 import json
 
 from database import (
-    fetch_last_one_result
+    fetch_last_one_result,
+    fetch_one_result
 )
 
-async def rle2contours(section_id, patch_id):
-    response = await fetch_last_one_result()
+async def rle2contours(section_id, patch_id, timestamp):
+    if timestamp == None:
+        response = await fetch_last_one_result()
+    else:
+        document = {"timestamp": timestamp}
+        response = await fetch_one_result(document)
     section_id = int(section_id)
     patch_id = int(patch_id)
     dict = json.loads(response)
     rle = dict['sections'][(section_id-1)]['patches'][(patch_id-1)]['patch_RLE']
     temp = dict['timestamp'].split(':')
     img_path = "./static/result/" + temp[0] + "/" + temp[1] + "/s_" + str(section_id) + "/" + str(patch_id) + ".png"
+    print(img_path)
     img = cv2.imread(img_path)
     contour_img = mask2contours(img, rle2mask(rle), color = [0, 0, 255])
     return contour_img

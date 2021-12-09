@@ -200,27 +200,37 @@
                                         var result_of_parsing_json;
                                         var result_status;
                                         var section_id;
+                                        var timestamp = document.location.pathname.split('/')[3]
                                         // for문 시작
-                                        df2 = {
-                                        "yes": "yes"
-                                        } 
-                                        $.ajax({
-                                            type: 'GET',
-                                            url: 'http://localhost:8000/monitoring',
-                                            data: JSON.stringify(df2),
-                                            dataType:'JSON',
-                                            contentType:"application/json",
-                                            async: false,
-                                            success: function(data){
-                                                result_of_parsing_json = JSON.parse(data);
-                                                result_status = result_of_parsing_json.timestamp.split(':');
-                                                section_id = document.location.pathname.split('/')[2];
-                                            },
-                                            error:function(request,status,error){
-                                                alert("code = "+ request.status + " error = " + error); // 실패 시 처리
-                                                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-                                            },
-                                        });
+                                        if (timestamp == 'undefined'){
+                                            df2 = {
+                                            "yes": "yes"
+                                            }
+                                            $.ajax({
+                                                type: 'GET',
+                                                url: 'http://localhost:8000/monitoring',
+                                                data: JSON.stringify(df2),
+                                                dataType:'JSON',
+                                                contentType:"application/json",
+                                                async: false,
+                                                success: function(data){
+                                                    result_of_parsing_json = JSON.parse(data);
+                                                    result_status = result_of_parsing_json.timestamp.split(':');
+                                                    section_id = document.location.pathname.split('/')[2];
+                                                },
+                                                error:function(request,status,error){
+                                                    alert("code = "+ request.status + " error = " + error); // 실패 시 처리
+                                                    alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+                                                },
+                                            });
+                                        } else{
+                                            temp = document.location.pathname.split('/')[3];
+                                            result_status = temp.split(':')
+                                            section_id = document.location.pathname.split('/')[2];
+                                        }
+
+
+                                        
                                         for ( var i=0; i<4 ; i++) {
                                             document.write("<tr>");    // <tr> : 행추가.
                                         // 이중 for문 시작
@@ -353,12 +363,22 @@
 </body>
 <script>
     function rle2contour(id){
-        var section_id = String(document.location.pathname.split('/')[2]); 
+        var section_id = String(document.location.pathname.split('/')[2]);
         var patch_id = String(id);
-        df = {
-            "section_id": section_id,
-            "patch_id" : patch_id
+        var timestamp = document.location.pathname.split('/')[3];
+        if (timestamp == 'undefined'){
+            df = {
+                "section_id": section_id,
+                "patch_id" : patch_id,
+            }
+        } else{
+            df = {
+                "section_id": section_id,
+                "patch_id" : patch_id,
+                "timestamp" : timestamp
+            }
         }
+
         $.ajax({
             type: 'POST',
             url: '/onMask',
@@ -389,29 +409,39 @@
     }
 
     function changeImg(){
+        if (timestamp == 'undefined'){
+            df2 = {
+            "yes": "yes"
+            }
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:8000/monitoring',
+                data: JSON.stringify(df2),
+                dataType:'JSON',
+                contentType:"application/json",
+                async: false,
+                success: function(data){
+                    result_of_parsing_json = JSON.parse(data);
+                    result_status = result_of_parsing_json.timestamp.split(':');
+                    section_id = document.location.pathname.split('/')[2];
+                },
+                error:function(request,status,error){
+                    alert("code = "+ request.status + " error = " + error); // 실패 시 처리
+                    alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+                },
+            });
+        } else{
+            temp = document.location.pathname.split('/')[3];
+            result_status = temp.split(':')
+            section_id = document.location.pathname.split('/')[2];
+        }
         df2 = {
             "yes": "yes"
         } 
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8000/monitoring',
-            data: JSON.stringify(df2),
-            dataType:'JSON',
-            contentType:"application/json",
-            success: function(data){
-                var result_of_parsing_json = JSON.parse(data);
-                var result_status = result_of_parsing_json.timestamp.split(':');
-                var section_id = document.location.pathname.split('/')[2];
-                for ( var i=1; i<17 ; i++) {
-                    var full_url = "result/" + result_status[0] + "/" + result_status[1] + "/s_" + (section_id) + "/" + (i) + ".png";
-                    document.getElementById(i).src = '{{ url_for("static", path="ADDSHARE")}}'.replace("ADDSHARE", full_url);
-                }
-            },
-            error:function(request,status,error){
-                alert("code = "+ request.status + " error = " + error); // 실패 시 처리
-                alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-            },
-        });
+        for ( var i=1; i<17 ; i++) {
+            var full_url = "result/" + result_status[0] + "/" + result_status[1] + "/s_" + (section_id) + "/" + (i) + ".png";
+            document.getElementById(i).src = '{{ url_for("static", path="ADDSHARE")}}'.replace("ADDSHARE", full_url);
+        }
     }
     // changeImg();
     // setInterval(changeImg, 10000);

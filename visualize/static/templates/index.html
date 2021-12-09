@@ -196,14 +196,15 @@
                                         //테이블 생성 태그를 연다.
                                         document.write("<table width='80%' style='margin: auto; text-align: center'>");
                                         var img_id = 0
+                                        var timestamp = document.location.pathname.split('/')[2]
                                         // for문 시작
                                         for ( var i=0; i<8 ; i++) {
                                             document.write("<tr>");    // <tr> : 행추가.                                       
                                          // 이중 for문 시작
                                             for ( var j=0; j<7 ; j++) {
                                                 img_id = img_id + 1
-                                                document.write('<td>'+'<a href="http://localhost:8000/sections/'+img_id+'" style="text-decoration:none"><div class="col-lg-12 mb-0"><div id="'+img_id+'" class="card bg-success text-white shadow"><div class="card-body">'+img_id+'</div></div></div></a>'+'</td>');     // <td> : 열추가.
-                                            } //end for j                      
+                                                document.write('<td>'+'<a href="http://localhost:8000/sections/'+img_id+'/'+timestamp+'" style="text-decoration:none"><div class="col-lg-12 mb-0"><div id="'+img_id+'" class="card bg-success text-white shadow"><div class="card-body">'+img_id+'</div></div></div></a>'+'</td>');     // <td> : 열추가.
+                                            } //end for j                     
                                          document.write("</tr>");
                                         } //end for i
                                        

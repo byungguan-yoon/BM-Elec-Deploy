@@ -55,8 +55,12 @@ async def monitoring():
     response = await fetch_last_one_result()
     return response
 
+@app.get("/pastData") 
+async def pastData():
+    response = await fetch_last_one_result()
+    return response
 
-@app.get("/sections/{section_id}")
+@app.get("/sections/{section_id}/{timestamp}")
 async def patch(request: Request):
     return templates.TemplateResponse("patch.html",{"request":request})
 
@@ -65,9 +69,8 @@ async def patch(request: Request):
 async def onMask(infor: schemas.Item):
     section_id = infor.section_id
     patch_id = infor.patch_id
-    print(section_id)
-    print(patch_id)
-    im_png = await rle2contours(section_id, patch_id)
+    timestamp = infor.timestamp
+    im_png = await rle2contours(section_id, patch_id, timestamp)
     res, im_png = cv2.imencode(".png", im_png)
     enc_img = np.fromstring(im_png, dtype = np.uint8)
     encoded_img = json.dumps(enc_img,cls=NumpyEncoder)
