@@ -55,7 +55,7 @@ def inspection_loop(model):
                 # logger.info(f"START: {section_id} Shot")
                 # section_id_str = section_id_str.zfill(2)
                 # 촬영 -> 분석 -> 결과 전송
-                pre_h_line, h_repre_list, h_repre_tf_list, repre_list, h_line_list = connector.process_snapshot(device, section_path, mongo, model, pre_h_line, h_repre_list, h_repre_tf_list, repre_list, h_line_list)
+                pre_h_line, h_repre_list, h_repre_tf_list, repre_list, h_line_list, timestamp = connector.process_snapshot(device, section_path, mongo, model, pre_h_line, h_repre_list, h_repre_tf_list, repre_list, h_line_list)
                 # logger.info(f"END: {section_id} Shot")
                 # destroy_device()
                 break
@@ -70,6 +70,9 @@ def inspection_loop(model):
     pprint(init_pro)
     result = v_sum(h_repre_tf_list, init_pro)
     print(f"Result: {result}")
+
+    # write result 
+    mongo.update_documents(timestamp=timestamp, document=result, is_product_tf=True)
 
     destroy_device()
 

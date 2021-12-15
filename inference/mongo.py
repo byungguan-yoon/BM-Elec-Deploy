@@ -16,10 +16,20 @@ class Mongo:
     def create_documents(self, document):
         self._collection.insert_one(document)
     
-    def update_documents(self, timestamp, document):
-        self._collection.update({"timestamp" : timestamp}, {"$addToSet":{"sections" : document}})
+    def update_documents(self, timestamp, document, is_product_tf=False):
+        if is_product_tf:
+            self._collection.update({"timestamp" : timestamp}, {"$addToSet":{"product_tf" : document}})
+        else:
+            self._collection.update({"timestamp" : timestamp}, {"$addToSet":{"sections" : document}})
 
 if __name__ == '__main__':
-    mongo = Mongo('localhost', 27017, 'bm_elec', 'inspection')
+    mongo = Mongo('localhost', 27017, 'bm_elec', 'inspection1')
     mongo.connect_init()
-    mongo.create_documents({"hi": "hello"})
+    # documents = dict(
+    #         timestamp = "ts",
+    #         sections = "sec",
+    #         product_tf = []
+    #         )
+    timestamp = "2021-12-07:15_28_39"
+    document = [True, False, True, False, True, False, True, False, True, False, True, False, True, False, True, False]
+    mongo.update_documents(timestamp=timestamp,document=document,is_product_tf=True)

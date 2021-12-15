@@ -104,7 +104,8 @@ class MelsecConnector:
         if section_id == 1:
             documents = dict(
             timestamp = timestamp,
-            sections = [section_info]
+            sections = [section_info],
+            product_tf = []
             )
 
             # print("mongo!")
@@ -150,7 +151,7 @@ class MelsecConnector:
         self.write_to_plc(values=[1], headdevice=self.READY_CAM2_ADDR)
         # logger.debug("(Cam)>>Vision Ready On.\n")
 
-        return pre_h_line, h_repre_list, h_repre_tf_list, repre_list, h_line_list
+        return pre_h_line, h_repre_list, h_repre_tf_list, repre_list, h_line_list, timestamp
 
     # PLC TO PC
     def plc2pc_get_val(self, read_size=2, headdevice="D10000"):

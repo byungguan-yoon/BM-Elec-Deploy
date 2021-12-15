@@ -66,7 +66,6 @@
         }
       </script>
 </head>
-
 <body id="page-top" onload="showClock()" oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 
     <!-- Page Wrapper -->
@@ -183,7 +182,7 @@
                     <div class="row">
                         <!-- Pie Chart -->
                         <div class="col-xl-9 col-lg-9" >
-                            <div class="card shadow mb-2" style="height: 655px;">
+                            <div class="card shadow mb-2" style="height: 765px;">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -215,44 +214,21 @@
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-3" >
-                            <div class="card shadow mb-2" style="height: 400px;">
+                            <div class="card shadow mb-2" style="height: 765px;">
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">통신 상태 확인</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">제품별 양불량</h6>
                                 </div>
                                 <div class="card-body align-items-center">
-                                    <table style="border-collapse: separate; border-spacing: 0px 40px; margin-right: auto; margin-left: auto; ">
-                                        <tr>
-                                            <td>
-                                                <a href="#" class="btn btn-success btn-circle btn">
-                                                    <i class="fas fa-check"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <h6 class="m-0 font-weight-bold text-dark" style="text-indent: 20px;">PLC 통신 상태</h6>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="#" class="btn btn-success btn-circle btn">
-                                                    <i class="fas fa-check"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <h6 class="m-0 font-weight-bold text-dark" style="text-indent: 20px;">Vison 통신 상태</h6>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <a href="#" class="btn btn-warning btn-circle btn">
-                                                    <i class="fas fa-exclamation-triangle"></i>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <h6 class="m-0 font-weight-bold text-dark" style="text-indent: 20px;">조명 통신 상태</h6>
-                                            </td>
-                                        </tr>
+                                    <table>
+                                        <script type="text/javascript">
+                                            for ( var i=0; i<16 ; i++) {
+                                                document.write("<tr>");
+                                                document.write('<div id="product_'+i+'" class="card bg-success text-white shadow"><div class="card-body"></div></div>')
+                                                document.write("</tr>");
+                                            }
+                                        </script>
                                     </table>
                                 </div>
                             </div>
@@ -363,8 +339,17 @@
                 dataType:'JSON',
                 contentType:"application/json",
                 success: function(data){
+                    var result_of_parsing_json = JSON.parse(data);
+                    var product_tf = result_of_parsing_json.product_tf
+                    for (var i=0;i<16;i++){
+                        var id = "product_" + String(i);
+                        if (product_tf[i] === true){
+                            document.getElementById(id).className = "card bg-danger text-white shadow";
+                        } else if (product_tf[i] === false){
+                            document.getElementById(id).className = "card bg-primary text-white shadow";
+                        }
+                    }
                     for ( var i=1; i<57 ; i++) {
-                        var result_of_parsing_json = JSON.parse(data);
                         var result_status = result_of_parsing_json.sections[i-1].section_flag;
                         if (result_status === true){
                             document.getElementById(i).className = "card bg-primary text-white shadow";
