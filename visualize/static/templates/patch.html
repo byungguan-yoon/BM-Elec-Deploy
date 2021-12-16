@@ -76,14 +76,14 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://192.168.0.42:8000/">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8000/">
                 <div class="sidebar-brand-text mx-3">BM ELECTRONICS</div>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="http://192.168.0.42:8000/">
+                <a class="nav-link" href="http://localhost:8000/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -95,14 +95,14 @@
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://192.168.0.42:8000/visualization">
+                <a class="nav-link collapsed" href="http://localhost:8000/visualization">
                     <i class="fas fa-fw fa-camera-retro"></i>
                     <span>검사 (Inspection)</span>
                 </a>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://192.168.0.42:8000/visualization">
+                <a class="nav-link collapsed" href="http://localhost:8000/visualization">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>이미지 저장 (Save Image)</span>
                 </a>
@@ -118,7 +118,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://192.168.0.42:8000/tables">
+                <a class="nav-link collapsed" href="http://localhost:8000/tables">
                     <i class="fas fa-fw fa-desktop"></i>
                     <span>결과 확인 (Display Result)</span>
                 </a>
@@ -208,7 +208,7 @@
                                             }
                                             $.ajax({
                                                 type: 'GET',
-                                                url: 'http://192.168.0.42:8000/monitoring',
+                                                url: 'http://localhost:8000/monitoring',
                                                 data: JSON.stringify(df2),
                                                 dataType:'JSON',
                                                 contentType:"application/json",
@@ -389,7 +389,7 @@
                 var bytes = data["images"].replaceAll("[","").replaceAll("]","").replaceAll(" ", "").split(",");
                 var bytesArray = new Uint8Array(bytes);
                 var blob = new Blob([bytesArray], {type: "image/png"});
-                var img_url = window.URL.createObjectURL(blob); // blob:http://192.168.0.42:1234/28ff8746-94eb-4dbe-9d6c-2443b581dd30
+                var img_url = window.URL.createObjectURL(blob); // blob:http://localhost:1234/28ff8746-94eb-4dbe-9d6c-2443b581dd30
                 document.getElementById(id).src = img_url;
                 },
                 error:function(request,status,error){
@@ -415,7 +415,7 @@
             }
             $.ajax({
                 type: 'GET',
-                url: 'http://192.168.0.42:8000/monitoring',
+                url: 'http://localhost:8000/monitoring',
                 data: JSON.stringify(df2),
                 dataType:'JSON',
                 contentType:"application/json",

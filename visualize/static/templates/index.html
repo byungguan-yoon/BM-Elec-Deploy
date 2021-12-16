@@ -73,14 +73,14 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://192.168.0.42:8000/">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://localhost:8000/">
                 <div class="sidebar-brand-text mx-3">BM ELECTRONICS</div>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="http://192.168.0.42:8000/">
+                <a class="nav-link" href="http://localhost:8000/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -92,14 +92,14 @@
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://192.168.0.42:8000/visualization">
+                <a class="nav-link collapsed" href="http://localhost:8000/visualization">
                     <i class="fas fa-fw fa-camera-retro"></i>
                     <span>검사 (Inspection)</span>
                 </a>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://192.168.0.42:8000/visualization">
+                <a class="nav-link collapsed" href="http://localhost:8000/visualization">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>이미지 저장 (Save Image)</span>
                 </a>
@@ -115,7 +115,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="http://192.168.0.42:8000/tables">
+                <a class="nav-link collapsed" href="http://localhost:8000/tables">
                     <i class="fas fa-fw fa-desktop"></i>
                     <span>결과 확인 (Display Result)</span>
                 </a>
@@ -202,7 +202,7 @@
                                          // 이중 for문 시작
                                             for ( var j=0; j<7 ; j++) {
                                                 img_id = img_id + 1
-                                                document.write('<td>'+'<a href="http://192.168.0.42:8000/sections/'+img_id+'/'+timestamp+'" style="text-decoration:none"><div class="col-lg-12 mb-0"><div id="'+img_id+'" class="card bg-success text-white shadow"><div class="card-body">'+img_id+'</div></div></div></a>'+'</td>');     // <td> : 열추가.
+                                                document.write('<td>'+'<a href="http://localhost:8000/sections/'+img_id+'/'+timestamp+'" style="text-decoration:none"><div class="col-lg-12 mb-0"><div id="'+img_id+'" class="card bg-success text-white shadow"><div class="card-body">'+img_id+'</div></div></div></a>'+'</td>');     // <td> : 열추가.
                                             } //end for j                     
                                          document.write("</tr>");
                                         } //end for i
@@ -304,7 +304,7 @@
             df = {
                 "yes": "yes"
             } 
-            var tmp_url = 'http://192.168.0.42:8000/searching/' + timestamp
+            var tmp_url = 'http://localhost:8000/searching/' + timestamp
             $.ajax({
                 type: 'GET',
                 url: tmp_url,
@@ -334,18 +334,19 @@
             } 
             $.ajax({
                 type: 'GET',
-                url: 'http://192.168.0.42:8000/monitoring',
+                url: 'http://localhost:8000/monitoring',
                 data: JSON.stringify(df2),
                 dataType:'JSON',
                 contentType:"application/json",
                 success: function(data){
                     var result_of_parsing_json = JSON.parse(data);
-                    var product_tf = result_of_parsing_json.product_tf
+                    var product_tf = String(result_of_parsing_json.product_tf).split(',');
                     for (var i=0;i<16;i++){
                         var id = "product_" + String(i);
-                        if (product_tf[i] === true){
+                        if (product_tf[i] === 'true'){
                             document.getElementById(id).className = "card bg-danger text-white shadow";
-                        } else if (product_tf[i] === false){
+                            
+                        } else if (product_tf[i] === 'false'){
                             document.getElementById(id).className = "card bg-primary text-white shadow";
                         }
                     }
